@@ -1,4 +1,7 @@
 <?php
+
+namespace QI\SistemaDeChamados\Controller;
+
 session_start();
 
 switch ($_GET["operation"]) {
@@ -17,7 +20,7 @@ switch ($_GET["operation"]) {
 function logout()
 {
     unset($_SESSION["user_data"]);
-    header("location:../../index.html");
+    header("location:../index.html");
     exit;
 }
 

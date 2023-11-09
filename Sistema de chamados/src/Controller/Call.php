@@ -1,4 +1,11 @@
 <?php
+
+namespace QI\SistemaDeChamados\Controller;
+
+use QI\SistemaDeChamados\Model\Call;
+
+require_once dirname(dirname(__DIR__)) . "/vendor/autoload.php";
+
 session_start();
 
 switch ($_GET["operation"]) {
@@ -17,6 +24,6 @@ function insert(){
         header("location:../View/message.php");
         exit;
     }
-    // TODO Criar o objeto Call
+    $call = new Call();
     // TODO Validar os dados recebidos
 }

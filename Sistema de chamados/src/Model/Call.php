@@ -1,5 +1,7 @@
 <?php
 
+namespace QI\SistemaDeChamados\Model;
+
 class Call{
     private $id;
     private $open_date;
