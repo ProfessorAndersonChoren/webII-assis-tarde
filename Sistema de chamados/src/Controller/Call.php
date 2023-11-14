@@ -29,6 +29,8 @@ function insert(){
         exit;
     }
     $user = new User($_POST["user_email"]);
+    $user->name = $_POST["user_name"]; // Setter
+
     $equipment = new Equipment(
         $_POST["pc_number"],
         $_POST["floor"],
@@ -40,5 +42,8 @@ function insert(){
         $equipment,
         $_POST["description"],
     );
+    if(!empty($_POST["notes"])){
+        $call->notes = $_POST["notes"]; // Setter
+    }
     // TODO Validar os dados recebidos
 }

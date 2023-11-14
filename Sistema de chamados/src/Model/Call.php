@@ -29,7 +29,8 @@ class Call
         $this->description = $description;
     }
 
-    public function __get($attribute){
+    public function __get($attribute)
+    {
         return $this->$attribute;
     }
 
