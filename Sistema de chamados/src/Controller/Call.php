@@ -46,4 +46,5 @@ function insert(){
         $call->notes = $_POST["notes"]; // Setter
     }
     // TODO Validar os dados recebidos
+    // TODO Registrar o chamado na base de dados
 }
