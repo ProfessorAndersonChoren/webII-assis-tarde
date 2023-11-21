@@ -24,7 +24,7 @@
       <label for="user_email">Email do usuário</label>
       <input type="email" id="user_email" name="user_email" class="form-control" required />
       <label for="pc_number">Número do equipamento</label>
-      <input type="number" id="pc_number" name="pc_number" class="form-control" required />
+      <input type="text" id="pc_number" name="pc_number" class="form-control" required />
       <label for="floor">Andar do equipamento</label>
       <input type="number" id="floor" name="floor" class="form-control" required />
       <label for="room">Sala do equipamento</label>
