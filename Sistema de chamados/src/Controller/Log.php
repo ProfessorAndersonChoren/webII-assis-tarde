@@ -4,13 +4,19 @@ namespace QI\SistemaDeChamados\Controller;
 
 class Log
 {
-    private static $file_path = "../../system_logs.log";
-
-    public static function write($text)
+    private function __construct()
     {
-        $text = date("d/m/Y h:m:s") . " - " . $text;
-        $file = fopen(self::$file_path, "w");
-        fwrite($file, $text);
+    }
+
+    public static function write($log)
+    {
+        $logsDir = dirname(dirname(__DIR__)) . "/logs/";
+        if (!is_dir($logsDir)) {
+            mkdir($logsDir);
+        }
+        $log_path =  $logsDir . date("Y-m-d h-i-s") . ".log";
+        $file = fopen($log_path, 'w');
+        fwrite($file, $log);
         fclose($file);
     }
 }
