@@ -11,6 +11,7 @@ class Call
     private $last_modify_date;
     private $user;
     private $equipment;
+    private $classification;
     private $description;
     private $notes;
 
@@ -20,13 +21,15 @@ class Call
      * @param User $user
      * @param Equipment $equipment
      * @param string $description
+     * @param string $classification
      */
-    public function __construct($open_date, $user, $equipment, $description)
+    public function __construct($open_date, $user, $equipment, $description, $classification)
     {
         $this->open_date = $open_date;
         $this->user = $user;
         $this->equipment = $equipment;
         $this->description = $description;
+        $this->classification = $classification;
     }
 
     public function __get($attribute)
