@@ -22,7 +22,7 @@ class CallRepository
     public function insert($call)
     {
         $date = $call->open_date->format("Y-m-d");
-        $stmt = $this->connection->prepare("insert into calls values (null,?,null,?,?,?,?,?);");
+        $stmt = $this->connection->prepare("call insertCall(?,?,?,?,?,?);");
         $stmt->bindParam(1, $date);
         $stmt->bindParam(2, $call->user->id);
         $stmt->bindParam(3, $call->equipment->pc_number);

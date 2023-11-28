@@ -25,6 +25,7 @@
                 <th>Número de equipamento</th>
                 <th>Descrição do chamado</th>
                 <th>Observações</th>
+                <th>Ações</th>
             </thead>
             <tbody>
                 <?php
@@ -53,6 +54,9 @@
                         </td>
                         <td>
                             <?= (!empty($call["notes"])) ? $call["notes"] : "Não existem observações" ?>
+                        </td>
+                        <td>
+                            
                         </td>
                     </tr>
                 <?php
