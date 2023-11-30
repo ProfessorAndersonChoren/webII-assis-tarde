@@ -42,7 +42,10 @@ class CallRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function findOne($id){}
+    function findOne($id){
+        $stmt = $this->connection->query("select * from calls where id=$id");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     function delete($id){
         $stmt = $this->connection->prepare("delete from calls where id=?");

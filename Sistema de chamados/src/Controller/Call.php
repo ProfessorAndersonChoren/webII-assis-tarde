@@ -92,6 +92,28 @@ function findAll()
 
 function findOne()
 {
+    $id = $_GET["code"];
+    if(empty($id)){
+        $_SESSION["msg_error"] = "O código do chamado é inválido!!!";
+        header("location:../View/message.php");
+        exit;
+    }
+    try{
+        $call_repository = new CallRepository();
+        $result = $call_repository->findOne($id);
+        if(empty($result)){
+            $_SESSION["msg_warning"] = "O chamado de código $id não foi encontrado em nossa base de dados!!!";
+            header("location:../View/message.php");
+        }else{
+            $_SESSION["call"] = $result;
+            header("location:../View/call-edit.php");
+        }
+    }catch(Exception $exception){
+        $_SESSION["msg_error"] =
+        "Ops, houve um erro inesperado em nosso banco de dados!!!";
+        Log::write($exception->getMessage());
+        header("location:../View/message.php");
+    }
 }
 
 function delete()
