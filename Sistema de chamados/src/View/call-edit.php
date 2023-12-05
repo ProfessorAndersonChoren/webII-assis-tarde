@@ -1,4 +1,7 @@
-<?php require_once dirname(__DIR__) . "/Controller/Auth_Verify.php" ?>
+<?php
+require_once dirname(__DIR__) . "/Controller/Auth_Verify.php";
+$call = $_SESSION["call"];
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -20,17 +23,17 @@
   </nav>
   <main class="bg-primary card d-flex align-items-center mt-5">
     <form action="../Controller/Call.php?operation=edit" method="post" class="w-75 p-3">
-      <input type="hidden" id="id" name="id" value="">
+      <input type="hidden" id="id" name="id" value="<?= $call["id"] ?>">
       <label for="user_name">Nome do usuário</label>
-      <input type="text" id="user_name" name="user_name" class="form-control" required />
+      <input type="text" id="user_name" name="user_name" class="form-control" required readonly value="<?= $call["name"] ?>" />
       <label for="user_email">Email do usuário</label>
-      <input type="email" id="user_email" name="user_email" class="form-control" required />
+      <input type="email" id="user_email" name="user_email" class="form-control" required readonly value="<?= $call["email"] ?>" />
       <label for="pc_number">Número do equipamento</label>
-      <input type="text" id="pc_number" name="pc_number" class="form-control" required />
+      <input type="text" id="pc_number" name="pc_number" class="form-control" required readonly value="<?= $call["equipment_id"] ?>" />
       <label for="floor">Andar do equipamento</label>
-      <input type="number" id="floor" name="floor" class="form-control" required />
+      <input type="number" id="floor" name="floor" class="form-control" required readonly value="<?= $call["floor"] ?>" />
       <label for="room">Sala do equipamento</label>
-      <input type="number" id="room" name="room" class="form-control" required />
+      <input type="number" id="room" name="room" class="form-control" required readonly value="<?= $call["room"] ?>" />
       <label for="classification" class="d-block">Classificação</label>
       <select name="classification" id="classification" class="form-select">
         <option value=1>Baixo</option>
@@ -38,9 +41,9 @@
         <option value=3>Alto</option>
       </select>
       <label for="description">Descrição da ocorrência</label>
-      <textarea name="description" id="description" cols="30" rows="5" class="form-control" required></textarea>
+      <textarea name="description" id="description" cols="30" rows="5" class="form-control" required><?= $call["description"] ?></textarea>
       <label for="notes">Notas e observações</label>
-      <textarea name="notes" id="notes" cols="30" rows="5" class="form-control"></textarea>
+      <textarea name="notes" id="notes" cols="30" rows="5" class="form-control"><?= $call["notes"] ?></textarea>
       <button class="btn btn-light mt-3">Salvar</button>
     </form>
   </main>

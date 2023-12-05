@@ -43,13 +43,28 @@ class CallRepository
     }
 
     function findOne($id){
-        $stmt = $this->connection->query("select * from calls where id=$id");
+        $stmt = $this->connection->query("select c.id,c.equipment_id,c.description,c.notes,u.name,u.email,e.floor,e.room from calls c inner join users u on c.user_id = u.id inner join equipments e on c.equipment_id = e.pc_number where c.id = $id;");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     function delete($id){
         $stmt = $this->connection->prepare("delete from calls where id=?");
         $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    /**
+     * Update a Call in database
+     * @param Call $call
+     * @return bool
+     */
+    function update($call){
+        $stmt = $this->connection->prepare("update calls set classification = ?, description = ?, notes = ?,last_modify_date = ? where id = ?;");
+        $stmt->bindParam(1, $call->classification);
+        $stmt->bindParam(2, $call->description);
+        $stmt->bindParam(3, $call->notes);
+        $stmt->bindParam(4, $call-> last_modify_date->format("Y-m-d"));
+        $stmt->bindParam(5, $call->id);
         return $stmt->execute();
     }
 }

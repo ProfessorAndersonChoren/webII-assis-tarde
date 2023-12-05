@@ -27,6 +27,9 @@ switch ($_GET["operation"]) {
     case "delete":
         delete();
         break;
+    case "edit":
+        update();
+        break;
     default:
         $_SESSION["msg_warning"] = "Operação inválida!!!";
         header("location:../View/message.php");
@@ -50,12 +53,12 @@ function insert()
         $_POST["room"],
     );
     $call = new Call(
-        new DateTime("now"),
         $user,
         $equipment,
         $_POST["description"],
         $_POST["classification"]
     );
+    $call->open_date = new DateTime("now");
     if (!empty($_POST["notes"])) {
         $call->notes = $_POST["notes"]; // Setter
     }
@@ -93,24 +96,24 @@ function findAll()
 function findOne()
 {
     $id = $_GET["code"];
-    if(empty($id)){
+    if (empty($id)) {
         $_SESSION["msg_error"] = "O código do chamado é inválido!!!";
         header("location:../View/message.php");
         exit;
     }
-    try{
+    try {
         $call_repository = new CallRepository();
         $result = $call_repository->findOne($id);
-        if(empty($result)){
+        if (empty($result)) {
             $_SESSION["msg_warning"] = "O chamado de código $id não foi encontrado em nossa base de dados!!!";
             header("location:../View/message.php");
-        }else{
+        } else {
             $_SESSION["call"] = $result;
             header("location:../View/call-edit.php");
         }
-    }catch(Exception $exception){
+    } catch (Exception $exception) {
         $_SESSION["msg_error"] =
-        "Ops, houve um erro inesperado em nosso banco de dados!!!";
+            "Ops, houve um erro inesperado em nosso banco de dados!!!";
         Log::write($exception->getMessage());
         header("location:../View/message.php");
     }
@@ -138,4 +141,39 @@ function delete()
     } finally {
         header("location:../View/message.php");
     }
+}
+
+function update()
+{
+    if (empty($_POST)) {
+        $_SESSION["msg_error"] = "Ops. Houve um erro inesperado em nossa aplicação!!!";
+        header("location:../View/message.php");
+        exit;
+    }
+    $user = new User($_POST["user_email"]);
+    $equipment = new Equipment(
+        $_POST["pc_number"],
+        $_POST["floor"],
+        $_POST["room"]
+    );
+    $call = new Call(
+        $user,
+        $equipment,
+        $_POST["description"],
+        $_POST["classification"]
+    );
+    $call->last_modify_date = new DateTime("now");
+    $call->id = $_POST["id"];
+    if (!empty($_POST["notes"])) {
+        $call->notes = $_POST["notes"];
+    }
+    // TODO Validação dos campos
+    $call_repository = new CallRepository();
+    $result = $call_repository->update($call);
+    if ($result) {
+        $_SESSION["msg_success"] = "Chamado atualizado com sucesso!!!";
+    } else {
+        $_SESSION["msg_warning"] = "Não foi possível atualizar o chamado!!!";
+    }
+    header("location:../View/message.php");
 }

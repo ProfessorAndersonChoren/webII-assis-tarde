@@ -17,15 +17,13 @@ class Call
 
     /**
      * This method create a new Call object
-     * @param DateTime $open_date
      * @param User $user
      * @param Equipment $equipment
      * @param string $description
      * @param string $classification
      */
-    public function __construct($open_date, $user, $equipment, $description, $classification)
+    public function __construct($user, $equipment, $description, $classification)
     {
-        $this->open_date = $open_date;
         $this->user = $user;
         $this->equipment = $equipment;
         $this->description = $description;
